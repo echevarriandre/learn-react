@@ -1,16 +1,16 @@
-import React from 'react';
-import { BrowserRouter as Router } from "react-router-dom";
-
+import React, { Fragment } from 'react';
+import { useLocation } from "react-router-dom";
 // Components
 import Nav from './components/layout/nav';
 import Content from './components/layout/content';
 
 function App() {
+  let location = useLocation();
   return (
-    <Router>
-      <Nav />
+    <Fragment>
+      <Nav location={location}/>
       <Content/>
-    </Router>
+    </Fragment>
   );
 }
 export default App;
