@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 class ListPosts extends React.Component {
   constructor(props){
@@ -11,6 +12,12 @@ class ListPosts extends React.Component {
   }
 
   componentDidMount() {
+    let breadcrumbs = <Fragment>
+                        <Link to="/" className="text-white text-sm hover:text-gray-200 duration-200">Dashboard</Link>
+                        <span className="text-indigo-500"> / </span>
+                        <span className="text-white text-base underline cursor-default">Posts</span>
+                      </Fragment>
+    this.props.onPageChange('Posts', breadcrumbs);
     axios.get('https://jsonplaceholder.typicode.com/posts')
       .then(response => {
         this.setState({
@@ -21,12 +28,45 @@ class ListPosts extends React.Component {
   }
 
   render() {
-    let isLoaded = true;
+    let tbody = [];
+    if (this.state.isLoaded) {
+      tbody = this.state.posts.map((posts, index) => 
+        <tr key={posts.id}>
+          <td className="border-t border-gray-200 px-6 py-2">{posts.id}</td>
+          <td className="border-t border-gray-200 px-6 py-2">{posts.title.slice(0, 40)}</td>
+          <td className="border-t border-gray-200 px-6 py-2">{posts.body.slice(0, 40)}</td>
+          <td className="border-t border-gray-200 px-6 py-2">{posts.userId}</td>
+          <td className="border-t border-gray-200 px-6 py-2">
+            <div className="inline-flex">
+              <Link to={`/posts/${posts.id}`} className="bg-green-600 hover:bg-green-500 text-white px-3 py-1 rounded-l text-sm duration-300 focus:outline-none">
+                Edit
+              </Link>
+              <button className="bg-red-500 hover:bg-red-400 text-white px-3 py-1 rounded-r text-sm duration-300 focus:outline-none">
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      );
+    } else {
+      for(let i = 0; i< 20; i++) {
+        tbody.push(
+          <tr className="animate-pulse" key={i}>
+            <td className="border-t border-gray-200 px-6 py-2"><div className="h-4 bg-gray-400 rounded"></div></td>
+            <td className="border-t border-gray-200 px-6 py-2"><div className="h-4 bg-gray-400 rounded"></div></td>
+            <td className="border-t border-gray-200 px-6 py-2"><div className="h-4 bg-gray-400 rounded"></div></td>
+            <td className="border-t border-gray-200 px-6 py-2"><div className="h-4 bg-gray-400 rounded"></div></td>
+            <td className="border-t border-gray-200 px-6 py-2"><div className="h-4 bg-gray-400 rounded"></div></td>
+          </tr>
+        );
+      }
+    }
+
     return (
-      <div className={`"w-full ${isLoaded ? '' : 'h-64'} bg-white rounded-lg mb-5 shadow`}>
+      <div className={`"w-full bg-white rounded-lg mb-5 shadow`}>
         <div className="flex text-gray-900 items-center justify-between w-auto rounded-t-lg px-6 py-5 font-bold text-lg">
           List of posts
-          <div className="flex">
+          <div>
             <button className="shadow bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2 rounded text-sm duration-300 focus:shadow-outline focus:outline-none">New Post</button>
           </div>
         </div>
@@ -42,24 +82,7 @@ class ListPosts extends React.Component {
               </tr>
             </thead>
             <tbody>
-              { this.state.posts.map((posts, index) => 
-                <tr key={posts.id}>
-                  <td className="border-t border-gray-200 px-6 py-2">{posts.id}</td>
-                  <td className="border-t border-gray-200 px-6 py-2">{posts.title.slice(0, 40)}</td>
-                  <td className="border-t border-gray-200 px-6 py-2">{posts.body.slice(0, 40)}</td>
-                  <td className="border-t border-gray-200 px-6 py-2">{posts.userId}</td>
-                  <td className="border-t border-gray-200 px-6 py-2">
-                    <div className="inline-flex">
-                      <button className="bg-green-600 hover:bg-green-500 text-white px-3 py-2 rounded-l text-sm duration-300 focus:outline-none">
-                        Edit
-                      </button>
-                      <button className="bg-red-500 hover:bg-red-400 text-white px-3 py-2 rounded-r text-sm duration-300 focus:outline-none">
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              )}
+              {tbody}
             </tbody>
           </table>
         </div>

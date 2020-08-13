@@ -12,7 +12,7 @@ class Nav extends React.Component {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <img className="h-8 w-8" src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg" alt="Workflow logo"/>
+                <Link to="/"><img className="h-8 w-8" src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg" alt="Workflow logo"/></Link>
               </div>
               <div className="block">
                 <div className="ml-10 flex items-baseline">
