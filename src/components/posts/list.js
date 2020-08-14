@@ -21,10 +21,13 @@ class ListPosts extends React.Component {
                       </Fragment>
     this.props.onPageChange('Posts', breadcrumbs);
     PostService.getPosts().then(response => {
-      this.setState({
-        posts: response.data,
-        isLoaded: true
-      });
+      let self = this;
+      setTimeout(() => { 
+        self.setState({
+          posts: response.data,
+          isLoaded: true
+        });
+      }, 800);
     })
   }
 

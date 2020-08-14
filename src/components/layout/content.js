@@ -39,7 +39,7 @@ class Content extends React.Component {
           <div className="-m-32 max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
             <div className="px-4 py-6 sm:px-0">
               <div className="rounded-lg h-64 mx-5">
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback>
                   <Switch>
                     <Route
                       path="/"
