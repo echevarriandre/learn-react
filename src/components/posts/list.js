@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import axios from 'axios';
+import PostService from '../../services/PostService'
 import { Link } from "react-router-dom";
 
 class ListPosts extends React.Component {
@@ -18,13 +18,12 @@ class ListPosts extends React.Component {
                         <span className="text-white text-base underline cursor-default">Posts</span>
                       </Fragment>
     this.props.onPageChange('Posts', breadcrumbs);
-    axios.get('https://jsonplaceholder.typicode.com/posts')
-      .then(response => {
-        this.setState({
-          posts: response.data,
-          isLoaded: true
-        });
-      })
+    PostService.getPosts().then(response => {
+      this.setState({
+        posts: response.data,
+        isLoaded: true
+      });
+    })
   }
 
   render() {
@@ -32,7 +31,7 @@ class ListPosts extends React.Component {
     if (this.state.isLoaded) {
       tbody = this.state.posts.map((posts, index) => 
         <tr key={posts.id}>
-          <td className="border-t border-gray-200 px-6 py-2">{posts.id}</td>
+          <td className="border-t border-gray-200 px-6 py-2">#{posts.id}</td>
           <td className="border-t border-gray-200 px-6 py-2">{posts.title.slice(0, 40)}</td>
           <td className="border-t border-gray-200 px-6 py-2">{posts.body.slice(0, 40)}</td>
           <td className="border-t border-gray-200 px-6 py-2">{posts.userId}</td>
