@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
 import PostService from '../../services/PostService'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash, faPen, faFile } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 
 class ListPosts extends React.Component {
@@ -37,11 +39,11 @@ class ListPosts extends React.Component {
           <td className="border-t border-gray-200 px-6 py-2">{posts.userId}</td>
           <td className="border-t border-gray-200 px-6 py-2">
             <div className="inline-flex">
-              <Link to={`/posts/${posts.id}`} className="bg-green-600 hover:bg-green-500 text-white px-3 py-1 rounded-l text-sm duration-300 focus:outline-none">
-                Edit
+              <Link to={`/posts/${posts.id}`} className="bg-green-500 hover:bg-green-500 text-white px-3 py-1 rounded-l text-sm duration-300 focus:outline-none">
+                <FontAwesomeIcon icon={faPen} />
               </Link>
               <button className="bg-red-500 hover:bg-red-400 text-white px-3 py-1 rounded-r text-sm duration-300 focus:outline-none">
-                Delete
+                <FontAwesomeIcon icon={faTrash} />
               </button>
             </div>
           </td>
@@ -66,7 +68,9 @@ class ListPosts extends React.Component {
         <div className="flex text-gray-900 items-center justify-between w-auto rounded-t-lg px-6 py-5 font-bold text-lg">
           List of posts
           <div>
-            <button className="shadow bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2 rounded text-sm duration-300 focus:shadow-outline focus:outline-none">New Post</button>
+            <button className="shadow bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2 rounded text-sm duration-300 focus:shadow-outline focus:outline-none">
+              <FontAwesomeIcon icon={faFile} /> New Post
+            </button>
           </div>
         </div>
         <div className="overflow-x-auto">

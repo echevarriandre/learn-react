@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import PostService from '../../services/PostService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from "react-router-dom";
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 class EditPost extends React.Component {
   constructor(props) {
@@ -71,7 +73,8 @@ class EditPost extends React.Component {
 
   render() {
     let title = null;
-    let buttons = null;
+    let buttonsForm = '';
+    let deleteButton = '';
     let info = [];
     if (this.state.isLoaded) {
       title = `Edit post #${this.state.post.id}`
@@ -105,10 +108,20 @@ class EditPost extends React.Component {
               <span className="mb-2"><span className="text-gray-700 text-sm font-bold"> User Id</span> {this.state.post.userId}</span>
             </Fragment>
 
-      buttons = <div className="inline-flex">
-                  <button onClick={() => this.save()} className="bg-green-500 hover:bg-green-400 text-white px-3 py-2 rounded-l text-sm duration-300 focus:outline-none">Save</button>
-                  <button onClick={() => this.delete()} className="bg-red-500 hover:bg-red-400 text-white px-3 py-2 rounded-r text-sm duration-300 focus:outline-none">Delete</button>
-                </div>
+      buttonsForm = <>
+                      <button onClick={() => this.props.history.push('/posts')} className="hover:bg-gray-200 text-gray-700 px-3 py-2 rounded text-sm duration-300 focus:outline-none">
+                        Return
+                      </button>
+                      <button onClick={() => this.save()} className="bg-green-500 hover:bg-green-400 text-white px-3 py-2 ml-4 rounded text-sm duration-300 focus:outline-none">
+                        Save
+                      </button>
+                    </>
+      
+      deleteButton = <div className="inline-flex">
+                        <button onClick={() => this.delete()} className="bg-red-500 hover:bg-red-400 text-white px-3 py-2 rounded text-sm duration-300 focus:outline-none">
+                          <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                      </div>
     }
     else {
       title = 'Loading...';
@@ -118,17 +131,19 @@ class EditPost extends React.Component {
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               </div>
-      buttons = '';
     }
     
     return (
       <div className={`"w-full bg-white rounded-lg mb-5 shadow`}>
         <div className="flex text-gray-900 items-center justify-between w-auto rounded-t-lg px-6 py-5 font-bold text-lg">
           <span className={`${this.state.isLoaded ? '' : 'animate-pulse'}`}>{title}</span>
-          {buttons}
+          {deleteButton}
         </div>
         <div className={`px-6 py-5`}>
           {info}
+        </div>
+        <div className="px-6 py-4 flex justify-end">
+          {buttonsForm}
         </div>
       </div>
     );
